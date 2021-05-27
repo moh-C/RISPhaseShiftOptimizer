@@ -1,6 +1,6 @@
-function [R] = DataRateCalculator(VT, w, noisePower, Bandwidth, Subcarriers, Taps, Power, bits)
-% This function returs the throughput that is achieved with a configuration
-% that you have. Inputs are:
+function [Rate] = DataRate(VT, w, noisePower, Bandwidth, Subcarriers, Taps, Power, bits)
+% This function returns the throughput that is achieved with a particular
+% phase shift configuration. Inputs are:
 % VT = the cascaded channel of Tx-RIS and RIS-Rx
 % w = is the phase shift. w should be [-2*n-1], [2*n+1] for n in range(2^(bits-1)).
 % For example we have two bits, the result is -3, -1, 1, 3 since n is [0, 2)
@@ -22,6 +22,6 @@ function [R] = DataRateCalculator(VT, w, noisePower, Bandwidth, Subcarriers, Tap
     h = VT*w_matrix;
     H_pad =FM*h(1:Taps, :);
     % Throughput
-    R = Bandwidth/(Subcarriers + Taps - 1) * sum(log2(1 + Power * abs(H_pad).^2 / (noisePower))); 
+    Rate = Bandwidth/(Subcarriers + Taps - 1) * sum(log2(1 + Power * abs(H_pad).^2 / (noisePower))); 
 end
 
