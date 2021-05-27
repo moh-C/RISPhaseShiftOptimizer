@@ -11,8 +11,5 @@ Bandwidth = 10e6; % Bandwidth for the transmission
 Power = 1e-3; % Power for each of the subcarriers
 Bits = 1; % Number of bits for discrete phase shift quantization
 N = 4096; % Number of RIS elements
-PossiblePS = PossiblePhaseShifts(Bits); % Possible phase shifts. If the RIS
-% is capable of 1-bit, the possible phase shifts are -1, +1 while if the
-% RIS is capable of having 2 bits, the possible phase shifts are: -3, -1,
-% 1, 3
+PossiblePS = PossiblePhaseShifts(Bits); % Explained in function header
 save Params.mat
