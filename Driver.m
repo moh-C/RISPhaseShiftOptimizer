@@ -6,7 +6,7 @@ Taps = 20; % Number of taps in OFDM transmission
 NoisePower = 3.06e-13; % Estimated Noise power
 Bandwidth = 10e6; % Bandwidth for the transmission
 Power = 1; % Power for each of the subcarriers
-Bits = 1; % Number of bits for discrete phase shift quantization
+Bits = 5; % Number of bits for discrete phase shift quantization
 N = 4096; % Number of RIS elements
 PossiblePS = PossiblePhaseShifts(Bits); % Explained in function header
 save Params.mat
@@ -17,7 +17,7 @@ save Params.mat
 load("./Old/VT_sparse.mat");
 VT = VT_sparse(1).VT;
 % Initial phase shift
-InitialConfig = VT_sparse(1).STMInitialConfig;
+InitialConfig = VT_sparse(4).STMInitialConfig;
 
 %% Running the algorithm
 FinalConfig = PhaseShiftOptimizer(VT, InitialConfig);
