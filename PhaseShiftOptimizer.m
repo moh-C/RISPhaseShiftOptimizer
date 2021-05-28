@@ -1,14 +1,27 @@
 function [FinalConfiguration] = PhaseShiftOptimizer(VT, InitialConfiguration)
 % The main function for phase shift optimization
+    load Params.mat PossiblePS N;
     TopK = +inf;
-    progressing = true;
-    while TopK > 0 && progressing
+    % progressing = true;
+    CurrentConfig = reshape(InitialConfiguration, [], 1);
+    HyperParam = 0.75;
+    while TopK > 0
+        % Identifying the unexplored phases
         UnexploredPhases = PhaseProposal(CurrentConfig);
-        % #TODO: PhaseProposal function should be implemented. This
-        % function provides the phase shifts that are feasible. For
-        % example, if you have 2 bits and the current state for that
-        % particular element is +1, this function will return -3, -1, 3
-        % This process is repeated for all of the elements
+        % After changing each element's configuration and comparing them
+        % with our initial configuration, let's see the impact
+        RatesVec = zeros(N, length(PossiblePS)-1);
+        for i=1:length(PossiblePS)-1
+            RatesVec(:, i) = DatarateExplorer(VT, CurrentConfig, UnexploredPhases(:, i));
+        end
+        % Out of all the proposed configurations, select the ones which
+        % have a positive impact. There also is an option of selecting a
+        % subset of those elements
+        [maxRates, maxRatesidx] = max(RatesVec, [], 2);
+        TopK = length(find(maxRates > 0));
+        [~,TopBiratesIdx] = maxk(maxRates,int8(TopK*HyperParam));
+        idx = sub2ind(size(UnexploredPhases), TopBiratesIdx, maxRatesidx(TopBiratesIdx));
+        CurrentConfig(TopBiratesIdx) = UnexploredPhases(idx);
     end
-    FinalConfiguration = VT*InitialConfiguration;
+    FinalConfiguration = CurrentConfig;
 end
