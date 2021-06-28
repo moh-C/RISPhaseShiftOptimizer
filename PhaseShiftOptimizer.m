@@ -22,6 +22,7 @@ function [FinalConfiguration] = PhaseShiftOptimizer(VT, InitialConfiguration)
         [~,TopBiratesIdx] = maxk(maxRates,int8(TopK*HyperParam));
         idx = sub2ind(size(UnexploredPhases), TopBiratesIdx, maxRatesidx(TopBiratesIdx));
         CurrentConfig(TopBiratesIdx) = UnexploredPhases(idx);
+        fprintf("Datarate: %f\n", DataRate(VT, CurrentConfig)/1e6);
     end
     FinalConfiguration = CurrentConfig;
 end
