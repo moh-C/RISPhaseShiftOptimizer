@@ -12,22 +12,15 @@ PossiblePS = PossiblePhaseShifts(Bits); % Explained in function header
 save Params.mat
 
 %% Running the algorithm
-VT = GenerateChannel();
+dSR = 110; % Source to RIS [m]
+dRD = 10; % RIS to Destination [m]
+VT = GenerateChannel(1, dSR, dRD);
 InitialConfig = STM(VT);
 UpperBound = DataRateUB(VT)/1e6;
 
 %% Running aggressive algorithm
-start_1 = datetime;
-FinalConfig2 = PhaseShiftOptimizer(VT, InitialConfig);
-fprintf("Initial Rate: %f, Final Rate: %f\n",...
-    DataRate(VT, InitialConfig)/1e6, DataRate(VT, FinalConfig2)/1e6);
-time1 = datetime - start_1;
-disp(time1);
+FinalConfig = PhaseShiftOptimizer(VT, InitialConfig);
 
-%% Running greedy algorithm
-start_2 = datetime;
-FinalConfig = greedy_algorithm(VT, InitialConfig);
-fprintf("Initial Rate: %f, Final Rate: %f\n",...
+%% Reporting the results
+fprintf("The initial rate was: %f\nThe final rate is: %f\n", ...
     DataRate(VT, InitialConfig)/1e6, DataRate(VT, FinalConfig)/1e6);
-time2 = datetime - start_2;
-disp(time2);
