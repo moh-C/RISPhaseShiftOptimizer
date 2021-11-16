@@ -10,3 +10,9 @@ In Driver.m, we generate a channel and then start to optimize the phase shifts t
 ## Workspace
 
 The optimizer was developed in MATLAB 2021a.
+
+## Visual representation
+
+In this algorithm, instead of having a greedy approach, we check "neighboring" configurations by flipping bits of the RSS. Upon improvement of rate, we flip the corresponding phases with reference to the primary phase of the current iteration and then, start the next iterations. A visual representation is provided for further clarification:
+
+<img src="./Algo.png"/>
